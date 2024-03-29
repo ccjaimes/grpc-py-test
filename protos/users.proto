@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package users;
+
+service Users {
+  	rpc GetUser (GetUserRequest) returns (GetUserResponse) {}
+	rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+	rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {}
+	
+	rpc SayHello (HelloRequest) returns (HelloResponse);
+	rpc LotsOfReplies (HelloRequest) returns (stream HelloResponse);
+	rpc LotsOfGreetings (stream HelloRequest) returns (DelayedHelloResponse);
+	rpc BidiHello (stream HelloRequest) returns (stream HelloResponse);
+}
+
+message User {
+	string id = 1;
+	string name = 2;
+	string phrase = 3;
+	string pw = 4;
+}
+
+message GetUserRequest {
+	string id = 1;
+}
+message GetUserResponse {
+	User user = 1;
+}
+
+message CreateUserRequest {
+	User user = 1;
+}
+message CreateUserResponse {
+	User user = 1;
+}
+
+message LoginUserRequest {
+	string name = 1;
+	string pw = 2;
+}
+message LoginUserResponse {
+	User user = 1;
+}
+
+message HelloRequest {
+	string name = 1;
+	string greeting = 2;
+}
+
+message HelloResponse {
+	string message = 1;
+}
+
+message DelayedHelloResponse {
+	string message = 1;
+	repeated HelloRequest request = 2;
+}
