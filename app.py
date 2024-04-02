@@ -16,6 +16,7 @@ surnames = ["Gomez", "Lincoln", "Jenkins", "Riveros"]
 
 # Try to import value with running instance info
 podId=os.environ.get('RUNNER', "far away")
+appPort=os.environ.get('RPCPORT', "50051")
 
 # Mock hash of a password to simulate authentication
 fakepw="ee959f1df4dc99154fa5898689f15fb7"
@@ -90,7 +91,7 @@ class Users(users_pb2_grpc.UsersServicer):
             yield users_pb2.HelloResponse(message="For iterated message No. {0}, Greetings from {1}".format(count, podId))
 
 def serve():
-    port = "50051"
+    port = appPort
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     users_pb2_grpc.add_UsersServicer_to_server(Users(), server)
     server.add_insecure_port("[::]:" + port)
