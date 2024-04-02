@@ -1,6 +1,7 @@
 .git
 .gitignore
 __pycache__/
+venv/
 Dockerfile
 .dockerignore
 clientapp.py
